@@ -1,1 +1,3 @@
-# speech-emotion-recognition
+# Speech Emotion Recognition
+
+Модель для определения эмоциональной окраски речи.
