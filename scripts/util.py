@@ -2,14 +2,16 @@ import torch
 import torchaudio
 import numpy as np
 
+from typing import Tuple
 
 
-def open(audio_file: str) -> tuple[torch.Tensor, int]:
+
+def open(audio_file: str) -> Tuple[torch.Tensor, int]:
     sig, sr = torchaudio.load(audio_file)
     return sig, sr
 
 
-def rechannel(aud: tuple[torch.Tensor, int], new_channel: int) -> tuple[torch.Tensor, int]:
+def rechannel(aud: Tuple[torch.Tensor, int], new_channel: int) -> Tuple[torch.Tensor, int]:
     sig, sr = aud
 
     if (sig.shape[0] == new_channel):
@@ -23,7 +25,7 @@ def rechannel(aud: tuple[torch.Tensor, int], new_channel: int) -> tuple[torch.Te
     return resig, sr
 
 
-def resample(aud: tuple[torch.Tensor, int], newsr: int) -> tuple[torch.Tensor, int]:
+def resample(aud: Tuple[torch.Tensor, int], newsr: int) -> Tuple[torch.Tensor, int]:
     sig, sr = aud
 
     if (sr == newsr):
@@ -38,7 +40,7 @@ def resample(aud: tuple[torch.Tensor, int], newsr: int) -> tuple[torch.Tensor, i
     return resig, newsr
 
 
-def pad_trunc(aud: tuple[torch.Tensor, int], max_ms: int) -> tuple[torch.Tensor, int]:
+def pad_trunc(aud: Tuple[torch.Tensor, int], max_ms: int) -> Tuple[torch.Tensor, int]:
     sig, sr = aud
     num_rows, sig_len = sig.shape
     max_len = sr//1000 * max_ms
@@ -58,14 +60,14 @@ def pad_trunc(aud: tuple[torch.Tensor, int], max_ms: int) -> tuple[torch.Tensor,
     return sig, sr
 
 
-def time_shift(aud: tuple[torch.Tensor, int], shift_limit: float) -> tuple[torch.Tensor, int]:
+def time_shift(aud: Tuple[torch.Tensor, int], shift_limit: float) -> Tuple[torch.Tensor, int]:
     sig, sr = aud
     _, sig_len = sig.shape
     shift_amt = int(np.random.random() * shift_limit * sig_len)
     return sig.roll(shift_amt), sr
 
 
-def spectrogram(aud: tuple[torch.Tensor, int], n_mels: int=64, n_fft: int=1024, hop_len: int=None) -> torch.Tensor:
+def spectrogram(aud: Tuple[torch.Tensor, int], n_mels: int=64, n_fft: int=1024, hop_len: int=None) -> torch.Tensor:
     sig,sr = aud
     top_db = 80
 

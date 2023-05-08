@@ -4,7 +4,6 @@ import pathlib
 import os
 import scripts.util as util
 
-
 class AudioDataset(Dataset):
     def __init__(self, dataset_path: str) -> None:
         self.dataset_path = pathlib.Path(dataset_path)
@@ -34,7 +33,7 @@ class AudioDataset(Dataset):
     def __len__(self) -> int:
         return len(self.file_paths)
     
-    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: int) -> torch.Tensor:
         aud = util.open(self.file_paths[idx])
   
         reaud = util.resample(aud, self.sr)

@@ -2,8 +2,9 @@ import torch
 from scripts.model import SpeechEmotionClassifier
 from scripts.dataset import AudioDataset
 import sys
+from typing import Dict
 
-def predict(root_dir: str = './src') -> dict:
+def predict(root_dir: str = './src') -> Dict:
     dataset = AudioDataset(root_dir)
     model = SpeechEmotionClassifier()
     model.load_state_dict(torch.load('./scripts/model/speech_emotion_recognizer_model.pth'))
