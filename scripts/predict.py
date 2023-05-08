@@ -7,7 +7,6 @@ def predict(root_dir: str = './src') -> dict:
     dataset = AudioDataset(root_dir)
     model = SpeechEmotionClassifier()
     model.load_state_dict(torch.load('./scripts/model/speech_emotion_recognizer_model.pth'))
-
     preds = {}
 
     model.eval()
