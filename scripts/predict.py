@@ -1,5 +1,5 @@
 import torch
-from model import SpeechEmotionClassifier
+from .model import SpeechEmotionClassifier
 from dataset import AudioDataset
 import sys
 import os
