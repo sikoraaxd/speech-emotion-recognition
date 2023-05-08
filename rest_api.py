@@ -24,4 +24,4 @@ def postapi():
     return jsonify(pred)
 
 if __name__ == '__main__':
-    app.run(debug=False, host='', port=int(os.environ["PORT"]))
+    app.run(debug=False, host='0.0.0.0', port=int(os.environ["PORT"]))
