@@ -17,16 +17,16 @@ jobs:
       - name: Create venv
         id: create_venv
         run: |
-          python -m venv ${{ runner.temp }}/venv
-          source ${{ runner.temp }}/venv/bin/activate
+          python -m venv ${{ runner.workspace }}/venv
+          source ${{ runner.workspace }}/venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
         env:
-          PIP_CACHE_DIR: ${{ runner.temp }}/.pip-cache
+          PIP_CACHE_DIR: ${{ runner.workspace }}/.pip-cache
       - name: Cache Python
         uses: actions/cache@v2
         with:
-          path: ${{ runner.temp }}/venv
+          path: ${{ runner.workspace }}/venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
   predict:
@@ -43,5 +43,5 @@ jobs:
         env:
           VIRTUAL_ENV: ${{ needs.install_dependencies.outputs.venv }}
         run: |
-          source $VIRTUAL_ENV/bin/activate
+          source $VIRTUAL_ENV/../bin/activate
           python ./scripts/predict.py
