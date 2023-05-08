@@ -1,6 +1,6 @@
 import torch
-from .model import SpeechEmotionClassifier
-from .dataset import AudioDataset
+from scripts.model import SpeechEmotionClassifier
+from scripts.dataset import AudioDataset
 import sys
 
 def predict(root_dir: str = './src') -> dict:
