@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import os
 from scripts.predict import predict
+import base64
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ def predict():
     filename = data['filename']
     b64data = data['data']
     with open(f'.src/{filename}', 'wb') as f:
-        f.write(b64data)
+        f.write(base64.decodebytes(b64data))
 
     pred = predict()
     return jsonify(pred)
