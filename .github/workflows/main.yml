@@ -5,6 +5,8 @@ on:
 jobs:
   install_dependencies:
     runs-on: ubuntu-latest
+    outputs:
+      venv: ${{ steps.create_venv.outputs.venv }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -12,11 +14,21 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      - name: Install dependencies
+      - name: Create venv
+        id: create_venv
         run: |
+          python -m venv ${{ runner.temp }}/venv
+          source ${{ runner.temp }}/venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-  
+        env:
+          PIP_CACHE_DIR: ${{ runner.temp }}/.pip-cache
+      - name: Cache Python
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.temp }}/venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
   predict:
     runs-on: ubuntu-latest
     needs: install_dependencies
@@ -27,6 +39,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      - name: Predict
+      - name: Use venv from install_dependencies
+        env:
+          VIRTUAL_ENV: ${{ needs.install_dependencies.outputs.venv }}
         run: |
+          source $VIRTUAL_ENV/bin/activate
           python ./scripts/predict.py
