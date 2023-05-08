@@ -14,6 +14,7 @@ def postapi():
     data = request.get_json()
     filename = data['filename']
     b64data = data['data']
+    print(os.listdir())
     data = base64.b64decode(b64data.encode('utf-8'))
     with open(f'./src/{filename}', 'wb') as f:
         f.write(data)
