@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import Dataset
 import pathlib
 import os
-import util
+import .util
 
 
 class AudioDataset(Dataset):
