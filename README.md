@@ -1,6 +1,24 @@
 # Speech Emotion Recognition
 ## Модель для определения эмоциональной окраски речи.
 
+
+**API:** https://speech-emotion-recognition-api.up.railway.app/
+
+*Пример использования:*
+```python
+import requests
+
+if __name__ == "__main__":
+  #
+  # Загрузка аудиофайла и перевод в base64 строку
+  #
+  data = {
+    "filename": "example.wav",
+    "data": base64_str_data
+  }
+  req = requests.post("https://speech-emotion-recognition-api.up.railway.app/", json=data)
+  print(req.json()) # [['спокойно', 'недовольно'], "example.wav"]
+```
 **Цель:** Распределение аудио-сообщений по эмоциональной окраске для дальнейшего использования в качестве части дискриминатора в модели генерации речи[^1].
 
 **Задачи:**
